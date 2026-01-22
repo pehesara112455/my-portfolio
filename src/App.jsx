@@ -2,6 +2,8 @@ import { useRef } from 'react';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import Navbar from './Components/Navbar';
+import Hero from './Components/Hero';
+import BucketAnimation from './Components/bucketAnimation';
 
 gsap.registerPlugin(useGSAP);
 
@@ -45,6 +47,8 @@ function App() {
       onMouseMove={handleMouseMove} // Track mouse movement on the whole screen
     >
       <Navbar/>
+      <Hero/>
+      <BucketAnimation/>
 
       {/*<div 
         ref={circleRef}
