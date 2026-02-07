@@ -100,7 +100,9 @@ const Hero = () => {
         </p>
 
         <div className='hero-text w-3xl mt-10 ml-20'>
-          <button className='flex flex-row justify-center gap-3 px-8 py-4 items-center bg-gray-600/40 border border-white/20 backdrop-blur-lg rounded-4xl text-lg hover:border-[#25D366]'>
+          <button className='flex flex-row justify-center gap-3 px-8 py-4 items-center bg-gray-600/40 border border-white/20 backdrop-blur-lg rounded-4xl text-lg 
+          transition-all duration-500 ease-in-out
+          hover:bg-[#25D366] hover:border-[#25D366] hover:text-shadow-white hover:scale-105 hover:shadow-[0_0_20px_rgba(37,211,102,0.4)]'>
           <FiMessageSquare/> 
           <span>
           Contact me  </span>
