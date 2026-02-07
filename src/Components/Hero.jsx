@@ -1,6 +1,7 @@
 import { useRef } from 'react';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
+import { FiMessageSquare } from 'react-icons/fi';
 
 const Hero = () => {
   const container = useRef();
@@ -97,6 +98,16 @@ const Hero = () => {
         <p className='hero-text text-gray-400 mt-10'>
           I am an ICT undergraduate at the University of Sri Jayewardenepura with a passion for building functional, user-friendly software. Specializing in modern web applications, I focus on solving real-world problems through clean, efficient code. I am currently available for freelance projects and look forward to helping you bring your ideas to life.
         </p>
+
+        <div className='hero-text w-3xl mt-10 ml-20'>
+          <button className='flex flex-row justify-center gap-3 px-8 py-4 items-center bg-gray-600/40 border border-white/20 backdrop-blur-lg rounded-4xl text-lg hover:border-[#25D366]'>
+          <FiMessageSquare/> 
+          <span>
+          Contact me  </span>
+        </button>
+        </div>
+
+        
         
       </div>
     </section>
