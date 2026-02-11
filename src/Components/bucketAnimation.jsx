@@ -97,9 +97,9 @@ const BucketAnimation = () => {
   }
 );
       gsap.from(headerTex.current, {
-    opacity: 0,         
-    y: 80,               
-    duration: 2,       
+    opacity: 0,
+    y: 80,
+    duration: 2,
     ease: "power3.out",  
     scrollTrigger: {
     trigger: headerTex.current,

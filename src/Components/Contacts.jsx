@@ -117,7 +117,7 @@ const Contact = () => {
 
           <div className="form-item flex flex-col gap-2">
             <label className="text-sm text-gray-400 ml-2">Email Address</label>
-            <input name="email" type="email" required placeholder="upehesara827@gmail.com" className="bg-white/5 border border-white/10 rounded-xl px-4 py-3 outline-none focus:border-[#25D366] transition-all" />
+            <input name="email" type="email" required placeholder="abc1234@gmail.com" className="bg-white/5 border border-white/10 rounded-xl px-4 py-3 outline-none focus:border-[#25D366] transition-all" />
           </div>
 
           <div className="form-item flex flex-col gap-2">
