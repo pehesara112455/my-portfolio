@@ -89,7 +89,7 @@ const Hero = () => {
         >
           {/* Replace with your actual image path */}
           <img 
-            src="src\assets\WhatsApp Image 2025-11-25 at 15.46.50.jpeg" 
+            src="../../public/WhatsApp Image 2025-11-25 at 15.46.50.jpeg" 
             alt="Uditha Pehesara" 
             className="w-full h-full object-cover"
           />
@@ -120,8 +120,8 @@ const Hero = () => {
         </div>
       </div>
     </section>
-      <img src='src\assets\reactIcon.png' alt='green-reactIcon' className='rightIcon absolute top-10 right-0 w-70 h-35 translate-x-1/2'/>
-      <img src='src\assets\reactIcon.png' alt='green-reactIcon' className='leftIcon absolute bottom-10 left-0 w-70 h-35 -translate-x-1/2'/>
+      <img src='s../../public\reactIcon.png' alt='green-reactIcon' className='rightIcon absolute top-10 right-0 w-70 h-35 translate-x-1/2'/>
+      <img src='../../public\reactIcon.png' alt='green-reactIcon' className='leftIcon absolute bottom-10 left-0 w-70 h-35 -translate-x-1/2'/>
     </div>
   );
 };
