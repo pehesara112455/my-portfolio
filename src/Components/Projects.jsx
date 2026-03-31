@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import gsap from 'gsap';
 import { FiCode, FiPenTool, FiX } from 'react-icons/fi';
 import ProjectCard from './projectCard';
@@ -6,50 +6,7 @@ import DesignCard from './designCard';
 import { ScrollTrigger } from 'gsap/all';
 import { useGSAP } from '@gsap/react';
 
-// 1. PROJECTS LIST
-const projects = [
-  {
-    title: "CEC Management System",
-    description: "A full-stack student management system developed for CEC to digitize administrative records.",
-    image: "",
-    tags: ["React", "Node.js", "PostgreSQL"],
-    link: "#",
-    github: "https://github.com/pehesara112455"
-  },
-  {
-    title: "Halls & Rooms Reservation System",
-    description: "A comprehensive booking platform allowing users to reserve event halls and rooms with real-time availability.",
-    image: "",
-    tags: ["React Vite", "Tailwind CSS", "Express.js", "Firebase"],
-    link: "#",
-    github: "https://github.com/pehesara112455"
-  },
-  {
-    title: "Mobile Shop E-Commerce Platform",
-    description: "A feature-rich online store for mobile phones including product filtering, cart functionality, and secure database management.",
-    image: "",
-    tags: ["React Vite", "Tailwind CSS", "Express.js", "MongoDB"],
-    link: "#",
-    github: "https://github.com/pehesara112455"
-  },
-  {
-    title: "Advanced Student Management System",
-    description: "A modern management tool for educational institutes, featuring a Neon database for serverless SQL performance and Vercel hosting.",
-    image: "",
-    tags: ["React Vite", "Neon DB", "Express.js", "Vercel"],
-    link: "#",
-    github: "https://github.com/pehesara112455"
-  },
-  {
-    title: "Personal Developer Portfolio",
-    description: "My personal portfolio website designed to showcase web development and graphic design projects with smooth GSAP animations.",
-    image: "/src/assets/portfolio-preview.png",
-    tags: ["React Vite", "Tailwind CSS", "GSAP", "Framer Motion"],
-    link: "#",
-    github: "https://github.com/pehesara112455"
-  }
-];
-
+// Keep designs static since they are local images
 const designs = [
   {
     title: "Knitting Academy",
@@ -102,14 +59,52 @@ export default function Project() {
   const headerTex = useRef();
   const [activeTab, setActiveTab] = useState('projects');
   const [selectedDesign, setSelectedDesign] = useState(null);
+  
+  // NEW STATE: For fetching GitHub Projects
+  const [projects, setProjects] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  // 1. UPDATED ENTRANCE: Now triggers when you scroll to the section
+  // 1. FETCH GITHUB DATA (Runs once when component mounts)
+  useEffect(() => {
+    const fetchGitHubProjects = async () => {
+      try {
+        // Fetch your public repositories, sorted by the most recently updated
+        const response = await fetch('https://api.github.com/users/pehesara112455/repos?sort=updated');
+        const data = await response.json();
+
+        // Format the GitHub data to match your ProjectCard props
+        const formattedProjects = data
+          .filter(repo => !repo.fork) // Ignore forks (other people's projects)
+          .map(repo => ({
+            title: repo.name.replace(/-/g, ' ').toUpperCase(), // Removes dashes and makes uppercase
+            description: repo.description || "No description provided on GitHub.",
+            // Default developer image since GitHub API doesn't send images
+            image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c", 
+            // Use GitHub topics for tags, or fallback to the primary language
+            tags: repo.topics && repo.topics.length > 0 ? repo.topics : [repo.language || "Code"],
+            // Use GitHub's "homepage" field for live demo links, or fallback to '#'
+            link: repo.homepage || "#",
+            github: repo.html_url
+          }));
+
+        setProjects(formattedProjects);
+        setIsLoading(false);
+      } catch (error) {
+        console.error("Error fetching from GitHub:", error);
+        setIsLoading(false);
+      }
+    };
+
+    fetchGitHubProjects();
+  }, []); // Empty array means run only once
+
+  // 2. ENTRANCE ANIMATION
   useGSAP(() => {
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: mainContainer.current,
-        start: "top 80%", // Triggers when the top of the section hits 80% of the screen height
-        toggleActions: "play none none none" // Plays once when entering
+        start: "top 80%",
+        toggleActions: "play none none none"
       }
     });
 
@@ -133,7 +128,8 @@ export default function Project() {
     }, "-=0.8");
   }, { scope: mainContainer });
 
-  // 2. Card Grid Animation (Performance Optimized)
+  // 3. CARD GRID ANIMATION
+  // We added 'projects' to the dependency array so it animates AFTER the data loads
   useGSAP(() => {
     gsap.from(".card-wrapper", {
       y: 30,
@@ -147,7 +143,7 @@ export default function Project() {
         start: "top 85%",
       }
     });
-  }, { dependencies: [activeTab], scope: mainContainer });
+  }, { dependencies: [activeTab, projects], scope: mainContainer });
 
   return (
     <section ref={mainContainer} className="flex flex-col min-h-[600px] p-10 gap-5 items-center bg-gray-950 relative overflow-hidden">
@@ -155,7 +151,6 @@ export default function Project() {
         My Projects & Designs
       </h1>
       
-      {/* BUTTONS SECTION - will-change-transform used to prevent lag */}
       <div className="flex flex-row items-center justify-center gap-4 p-10">
         <button
           onClick={() => setActiveTab("projects")}
@@ -182,15 +177,24 @@ export default function Project() {
         </button>
       </div>
 
-      {/* DYNAMIC GRID */}
       <div className="the-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-10 w-full max-w-7xl">
-        {activeTab === "projects" ? (
-          projects.map((project, index) => (
-            <div key={`project-${index}`} className='card-wrapper will-change-transform'>
-              <ProjectCard {...project} />
+        {/* If Projects Tab is active */}
+        {activeTab === "projects" && (
+          isLoading ? (
+            <div className="col-span-full text-center text-gray-400 text-xl py-10">
+              Loading projects from GitHub... 🚀
             </div>
-          ))
-        ) : (
+          ) : (
+            projects.map((project, index) => (
+              <div key={`project-${index}`} className='card-wrapper will-change-transform'>
+                <ProjectCard {...project} />
+              </div>
+            ))
+          )
+        )}
+
+        {/* If Designs Tab is active */}
+        {activeTab === "designs" && (
           designs.map((design, index) => (
             <div key={`design-${index}`} className="card-wrapper will-change-transform">
               <DesignCard 
@@ -202,7 +206,6 @@ export default function Project() {
         )}
       </div>
 
-      {/* MODAL SECTION */}
       {selectedDesign && (
         <div 
           className="fixed inset-0 z-[1000] bg-black/95 backdrop-blur-md flex items-center justify-center p-4 md:p-10 cursor-zoom-out"

@@ -3,7 +3,7 @@ import gsap from 'gsap';
 import { FiGithub, FiExternalLink } from 'react-icons/fi';
 
 // 1. ADD DEFAULT VALUE: tags = [] ensures tags is never undefined
-const ProjectCard = ({ title, description, image, tags = [], link, github }) => {
+const ProjectCard = ({ title, description, image, tags = [],  github }) => {
   const cardRef = useRef();
 
   const handleMouseEnter = () => {
@@ -61,9 +61,7 @@ const ProjectCard = ({ title, description, image, tags = [], link, github }) => 
           <a href={github} target="_blank" rel="noreferrer" className="text-gray-400 hover:text-white transition-colors">
             <FiGithub size={20} />
           </a>
-          <a href={link} target="_blank" rel="noreferrer" className="text-gray-400 hover:text-[#25D366] transition-colors">
-            <FiExternalLink size={20} />
-          </a>
+          
         </div>
       </div>
     </div>

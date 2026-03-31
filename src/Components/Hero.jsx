@@ -7,8 +7,21 @@ const Hero = () => {
   const container = useRef();
   const circleRef = useRef();
 
-  useGSAP(() => {
+  // Your phone number formatted for WhatsApp API (Sri Lanka country code 94)
+  const phoneNumber = "94769221304"; 
+  // Pre-filled text message
+  const preFilledText = "Hi Uditha, I would like to discuss a project with you.";
 
+  // Function to handle the button click
+  const handleWhatsAppClick = () => {
+    // The official WhatsApp API URL format
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(preFilledText)}`;
+    
+    // Open the link in a new tab
+    window.open(whatsappUrl, '_blank');
+  };
+
+  useGSAP(() => {
     gsap.fromTo(circleRef.current,{
         y:"10vh",
         opacity:0
@@ -19,6 +32,7 @@ const Hero = () => {
         duration:2,
         ease:"power2.out"
     },{scope:container})
+    
     // 1. Entrance Animation: Text slides up and fades in
     gsap.from(".hero-text", {
       y: 50,
@@ -51,7 +65,6 @@ const Hero = () => {
       rotate:360,
       ease:"power3.out"
     });
-    
 
     // 2. Pulse Animation: The green glow breathes
     gsap.to(circleRef.current, {
@@ -63,13 +76,9 @@ const Hero = () => {
     });
   }, { scope: container });
 
-  // 3. Mouse Movement: The shadow follows your mouse
-  
-
   return (
     <div ref={container} className='flex flex-col overflow-hidden relative'>
          <section 
-       
       className="flex flex-col md:flex-row justify-center items-center min-h-[50vh] px-10 gap-16 text-white overflow-hidden py-10"
     >
       {/* Profile Image with Glowing Circle */}
@@ -100,23 +109,20 @@ const Hero = () => {
         </p>
 
         <div className='hero-text w-3xl mt-10 ml-20'>
-          <button className='flex flex-row justify-center gap-3 px-8 py-4 items-center bg-gray-600/40 border border-white/20 backdrop-blur-lg rounded-4xl text-lg 
-          transition-all duration-500 ease-in-out
-          hover:bg-[#25D366] hover:border-[#25D366] hover:text-shadow-white hover:scale-105 hover:shadow-[0_0_20px_rgba(37,211,102,0.4)]'>
-          <FiMessageSquare/> 
-          <span>
-          Contact me  </span>
-        </button>
+          {/* UPDATED: Added onClick handler to trigger the WhatsApp function */}
+          <button 
+            onClick={handleWhatsAppClick}
+            className='flex flex-row justify-center gap-3 px-8 py-4 items-center bg-gray-600/40 border border-white/20 backdrop-blur-lg rounded-4xl text-lg transition-all duration-500 ease-in-out hover:bg-[#25D366] hover:border-[#25D366] hover:text-shadow-white hover:scale-105 hover:shadow-[0_0_20px_rgba(37,211,102,0.4)]'
+          >
+            <FiMessageSquare/> 
+            <span>Contact me</span>
+          </button>
         </div>
-
-        
-        
       </div>
     </section>
       <img src='src\assets\reactIcon.png' alt='green-reactIcon' className='rightIcon absolute top-10 right-0 w-70 h-35 translate-x-1/2'/>
       <img src='src\assets\reactIcon.png' alt='green-reactIcon' className='leftIcon absolute bottom-10 left-0 w-70 h-35 -translate-x-1/2'/>
     </div>
-   
   );
 };
 

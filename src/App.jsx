@@ -27,7 +27,6 @@ function App() {
       className="min-h-screen bg-gray-950 overflow-hidden relative"
       onMouseMove={handleMouseMove}
       style={{
-        // 3. This centers the green glow exactly on your mouse pointer
         backgroundImage: `radial-gradient(
           800px circle at ${mousePos.x}px ${mousePos.y}px, 
           rgba(37, 211, 102, 0.1), 
@@ -35,13 +34,25 @@ function App() {
         )`
       }}
     >
-      {/* 4. Keep your content in a high Z-index layer */}
       <div className="relative z-10">
+        {/* Navbar stays at the top, it doesn't need an ID to be scrolled to */}
         <Navbar/>
-        <Hero/>
-        <BucketAnimation/>
-        <Project/>
-        <Contact/>
+        
+        {/* 1. The 'About' Address */}
+        <div id="about">
+          <Hero/>
+          <BucketAnimation/>
+        </div>
+
+        {/* 2. The 'Projects' Address */}
+        <div id="projects" className="pt-20"> {/* Added padding so the navbar doesn't cover the title */}
+          <Project/>
+        </div>
+
+        {/* 3. The 'Contacts' Address */}
+        <div id="contacts" className="pt-20">
+          <Contact/>
+        </div>
       </div>
     </div>
   );
