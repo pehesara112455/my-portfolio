@@ -11,42 +11,42 @@ const designs = [
   {
     title: "Knitting Academy",
     description: "Logo and visual branding for a modern clothing line.",
-    image: "../../public/Design/knitting post.png",
+    image: "/Design/knitting post.png",
     tags: ["Photoshop"],
     link: "#", github: "#"
   },
   {
     title: "ප්‍රියන්ගනී Plants Marketing",
     description: "Social media designs and logo for a flower plant business.",
-    image: "../../public/Design/Priyanganiplants.png",
+    image: "/Design/Priyanganiplants.png",
     tags: ["Marketing", "Photoshop"],
     link: "#", github: "#"
   },
   {
     title: "Ghost Paradise",
     description: "Creative visual design concepts exploring dark aesthetics.",
-    image: "../../public/Design/Gost paradise.jpg",
+    image: "/Design/Gost paradise.jpg",
     tags: ["Photoshop"],
     link: "#", github: "#"
   },
   {
     title: "ICT Awareness Post",
     description: "Educational graphic design for IT-related content.",
-    image: "../../public/Design/ICT Post.png",
+    image: "/Design/ICT Post.png",
     tags: ["Photoshop"],
     link: "#", github: "#"
   },
   {
     title: "Plant Branding",
     description: "Visual identity design for botanical and nursery projects.",
-    image: "../../public/Design/plant.jpg",
+    image: "/Design/plant.jpg",
     tags: ["Photoshop"],
     link: "#", github: "#"
   },
   {
     title: "Raygamaya Logo",
     description: "Official logo design for the Raygamaya brand.",
-    image: "../../public/Design/Raygamaya-logo.png",
+    image: "/Design/Raygamaya-logo.png",
     tags: ["Photoshop"],
     link: "#", github: "#"
   }
